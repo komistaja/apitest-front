@@ -8,6 +8,9 @@ import { ApiService } from './api.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  constructor (
+    private _service: ApiService
+  ) {}
   title = 'api-test';
   activeSystem = '';
   number;
@@ -18,11 +21,14 @@ export class AppComponent {
   ];
   numbers = [
     5, 10, 20
-  ]
+  ];
 
   test(system, number) {
-    if(!this.isCalled) { this.isCalled = true }
+    if (!this.isCalled) { this.isCalled = true; }
     this.activeSystem = system;
     this.number = number;
+    if (this.activeSystem != null) {
+      this._service.getData(this.activeSystem, this.number).subscribe(data => { console.log(data); });
+    }
   }
 }
